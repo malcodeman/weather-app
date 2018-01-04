@@ -1,5 +1,3 @@
-const axios = require("axios");
-
 const unitConverter = require("./assets/js/unitConterter");
 const weather = require("./assets/js/weather");
 
