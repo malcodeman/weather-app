@@ -5,15 +5,22 @@ function getCurrentWeather() {
     weather.getCurrentWeather("london").then(response => {
             console.log(response);
             let temp = response.main.temp;
-            let humidity = response.main.humidity;
-            let description = response.weather[0].description;            
+            let description = response.weather[0].description;
+            getRandomImage(description.split(" ").join(","));
+            let city = response.name;
+            let country = response.sys.country
             document.getElementById("temperature").textContent = unitConverter.kelvinToCelsius(temp);
-            document.getElementById("humidity").textContent = humidity;
             document.getElementById("description").textContent = description;
+            document.getElementById("location").textContent = city + ", " + country;
         })
         .catch(error => {
             console.log(error.message);
         })
 }
 
-getCurrentWeather(); 
+function getRandomImage(term) {
+    let url = "https://source.unsplash.com/random/?" + term;
+    document.getElementById("page").style.backgroundImage = "url(" + url + ")";
+}
+
+getCurrentWeather();
