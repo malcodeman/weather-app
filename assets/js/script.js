@@ -3,6 +3,7 @@ const weather = require("./assets/js/openWeatherMap");
 const unsplash = require("./assets/js/unsplash");
 const windowCommands = require("./assets/js/windowCommands");
 const geolocation = require("./assets/js/geolocation");
+const timeanddate = require("./assets/js/timeAnDdate");
 
 function getCurrentWeather() {
     weather.byCityName("london").then(response => {
@@ -33,9 +34,7 @@ function getCurrentPosition() {
 }
 
 function renderDate() {
-    let date = new Date();
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-    document.getElementById("date").textContent = date.getDate() + " " + monthNames[date.getMonth()];
+    document.getElementById("date").textContent = timeanddate.dayOfTheMonth() + " " + timeanddate.monthAbbreviaton();
 }
 
 getCurrentWeather();

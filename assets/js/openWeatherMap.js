@@ -1,3 +1,5 @@
+// Source: http://openweathermap.org/api
+
 const axios = require("axios");
 const openWeatherMapApiKey = process.env.OPEN_WEATHER_MAP_API_KEY;
 
