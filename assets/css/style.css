@@ -12,17 +12,39 @@ body {
 	margin: 0;
 }
 
-.page{
+.page {
 	height: 100vh;
 	background-size: cover;
 	background-position: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.nav {
+	color: #000;
+	font-family: AvenirProMedium;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	-webkit-app-region: drag;
+}
+
+.ic {
+	width: 24px;
+	height: 24px;
+}
+
+.ic-close {
+	background-image: url("icons/ic_close_black_24dp_1x.png");
+	-webkit-app-region: no-drag;
 }
 
 .main {
 	display: flex;
 	flex-direction: column;
 	font-family: AvenirProBlack;
-	color: #fff;
 }
 
 .location {
@@ -30,10 +52,35 @@ body {
 	font-size: 1rem;
 }
 
-.description{
+.description {
 	font-size: 1.4rem;
 }
 
-.temp{
+.temp {
 	font-size: 4rem;
+}
+
+.footer {
+	display: flex;
+	padding-left: 1rem;
+	padding-bottom: 1rem;
+	align-items: flex-end;
+	overflow: hidden;
+	height: 220px;
+	box-sizing: border-box;
+}
+
+.img {
+	object-fit: cover;
+}
+
+.img-left {
+	width: 56%;
+	height: 76%;
+	margin-right: 4px;
+}
+
+.img-right {
+	width: 100%;
+	height: 100%;
 }
