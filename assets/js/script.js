@@ -5,7 +5,7 @@ const windowCommands = require("./assets/js/windowCommands");
 const geolocation = require("./assets/js/geolocation");
 
 function getCurrentWeather() {
-    weather.getCurrentWeather("london").then(response => {
+    weather.byCityName("london").then(response => {
             console.log(response);
             let temp = response.main.temp;
             let description = response.weather[0].description;
