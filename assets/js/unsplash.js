@@ -16,7 +16,7 @@ function randomFromCollection(collectionId) {
     return "https://source.unsplash.com/collection/" + collectionId;
 }
 
-function randomSearchTerm(keyword) {
+function randomFromSearchTerm(keyword) {
     return "https://source.unsplash.com/random/?" + keyword;
 }
 
@@ -25,5 +25,5 @@ module.exports = {
     randomFromUser: randomFromUser,
     randomFromUsersLikes: randomFromUsersLikes,
     randomFromCollection: randomFromCollection,
-    randomSearchTerm: randomSearchTerm
+    randomFromSearchTerm: randomFromSearchTerm
 }

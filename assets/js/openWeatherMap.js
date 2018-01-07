@@ -1,8 +1,8 @@
 const axios = require("axios");
-const apiKey = process.env.API_KEY;
+const openWeatherMapApiKey = process.env.OPEN_WEATHER_MAP_API_KEY;
 
 function getCurrentWeather(city) {
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${openWeatherMapApiKey}`
     return axios.get(url)
         .then(function (response) {
             return response.data;
@@ -14,7 +14,7 @@ function getCurrentWeather(city) {
 }
 
 function getForecast(city) {
-    let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
+    let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${openWeatherMapApiKey}`
     return axios.get(url)
         .then(function (response) {
             return response.data;
