@@ -16,9 +16,14 @@ function randomFromCollection(collectionId) {
     return "https://source.unsplash.com/collection/" + collectionId;
 }
 
+function randomSearchTerm(keyword) {
+    return "https://source.unsplash.com/random/?" + keyword;
+}
+
 module.exports = {
     random: random,
     randomFromUser: randomFromUser,
     randomFromUsersLikes: randomFromUsersLikes,
-    randomFromCollection: randomFromCollection
+    randomFromCollection: randomFromCollection,
+    randomSearchTerm: randomSearchTerm
 }
