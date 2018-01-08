@@ -8,7 +8,7 @@ const timeanddate = require("./assets/js/timeAnDdate");
 function main() {
     document.getElementById("close").addEventListener("click", () => {
         windowCommands.close();
-    })
+    });
     geolocation.currentPosition().then(response => {
             let lat = response.coords.latitude;
             let lon = response.coords.longitude;
@@ -30,7 +30,7 @@ function main() {
         })
         .catch(error => {
             console.log(error.message);
-        })
+        });
 }
 
 function renderDate() {

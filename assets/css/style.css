@@ -14,12 +14,13 @@ body {
 
 .page {
 	height: 100vh;
-	background-size: cover;
-	background-position: center;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 }
+
+
+/* Navigation */
 
 .nav {
 	color: #000;
@@ -41,6 +42,9 @@ body {
 	-webkit-app-region: no-drag;
 }
 
+
+/* Main */
+
 .main {
 	display: flex;
 	flex-direction: column;
@@ -48,25 +52,28 @@ body {
 	padding-left: 1rem;
 }
 
+.description {
+	font-size: 1.4rem;
+}
+
 .location {
 	font-family: AvenirProMedium;
 	font-size: 1rem;
-}
-
-.description {
-	font-size: 1.4rem;
 }
 
 .temp {
 	font-size: 4rem;
 }
 
+
+/* Footer */
+
 .footer {
 	display: flex;
 	padding-left: 1rem;
 	padding-bottom: 1rem;
 	align-items: flex-end;
-	overflow: hidden;
+	overflow-x: hidden;
 	height: 220px;
 	box-sizing: border-box;
 }
