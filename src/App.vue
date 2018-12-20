@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     getLocation: function() {
-      const ipstack_api_key = process.env.VUE_APP_IPSTACK_API_KEY;
+      const api_url = process.env.VUE_APP_API_URL;
 
-      return fetch(`http://api.ipstack.com/check?access_key=${ipstack_api_key}`)
+      return fetch(`${api_url}/get/location`)
         .then(stream => stream.json())
         .then(data => {
           this.loading = false;
@@ -49,11 +49,10 @@ export default {
         });
     },
     getForecast: function(location) {
-      const darksky_api_key = process.env.VUE_APP_DARKSKY_API_KEY;
+      const api_url = process.env.VUE_APP_API_URL;
+
       fetch(
-        `https://api.darksky.net/forecast/${darksky_api_key}/${
-          location.latitude
-        },${location.longitude}?units=auto`
+        `${api_url}/get/forecast/${location.latitude},${location.longitude}`
       )
         .then(stream => stream.json())
         .then(data => {
