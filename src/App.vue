@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     getLocation: function() {
-      const api_url = process.env.VUE_APP_API_URL;
+      const ipstack_api_key = process.env.VUE_APP_IPSTACK_API_KEY;
 
-      return fetch(`${api_url}/get/location`)
+      return fetch(`http://api.ipstack.com/check?access_key=${ipstack_api_key}`)
         .then(stream => stream.json())
         .then(data => {
           this.loading = false;
