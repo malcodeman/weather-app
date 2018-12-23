@@ -1,6 +1,9 @@
 <template>
   <main class="main">
-    <div v-if="location">
+    <div v-if="fetching && !location">
+      <Loader/>
+    </div>
+    <div v-else>
       <h2 class="location">
         {{location.city}}, {{location.country_name}}
         <span
@@ -9,9 +12,10 @@
         >{{location.location.country_flag_emoji}}</span>
       </h2>
     </div>
-    <p v-if="error">Error!</p>
-    <p v-if="loading">Loading...</p>
-    <div class="temp-wrapper" v-if="forecast">
+    <div v-if="fetching && !forecast">
+      <Loader/>
+    </div>
+    <div class="temp-wrapper" v-else>
       <h1 class="temp">{{forecast.currently.temperature}}</h1>
       <p class="summary">{{forecast.currently.summary}}</p>
     </div>
@@ -19,6 +23,8 @@
 </template>
 
 <script>
+import Loader from "./components/Loader.vue";
+
 export default {
   name: "App",
   data() {
@@ -26,18 +32,23 @@ export default {
       location: null,
       forecast: null,
       error: false,
-      loading: false
+      fetching: false
     };
+  },
+  components: {
+    Loader
   },
   methods: {
     getLocation: function() {
       const ipstack_api_key = process.env.VUE_APP_IPSTACK_API_KEY;
 
+      this.fetching = true;
+
       return fetch(`http://api.ipstack.com/check?access_key=${ipstack_api_key}`)
         .then(stream => stream.json())
         .then(data => {
-          this.loading = false;
           this.location = data;
+          this.fetching = false;
           return {
             latitude: data.latitude,
             longitude: data.longitude
@@ -45,30 +56,29 @@ export default {
         })
         .catch(() => {
           this.error = true;
-          this.loading = false;
+          this.fetching = false;
         });
     },
     getForecast: function(location) {
       const api_url = process.env.VUE_APP_API_URL;
+
+      this.fetching = true;
 
       fetch(
         `${api_url}/get/forecast/${location.latitude},${location.longitude}`
       )
         .then(stream => stream.json())
         .then(data => {
-          this.loading = false;
           this.forecast = data;
+          this.fetching = false;
         })
         .catch(() => {
           this.error = true;
-          this.loading = false;
+          this.fetching = false;
         });
     },
     getWeatherData: async function() {
-      this.loading = true;
-
       const location = await this.getLocation();
-
       this.getForecast(location);
     }
   },
