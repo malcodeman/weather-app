@@ -1,23 +1,35 @@
 <template>
   <main class="main">
-    <div v-if="fetching && !location">
-      <Loader/>
+    <div v-if="errorLocation">
+      <p class="error">Error fetching location</p>
     </div>
     <div v-else>
-      <h2 class="location">
-        {{location.city}}, {{location.country_name}}
-        <span
-          role="img"
-          aria-label="flag"
-        >{{location.location.country_flag_emoji}}</span>
-      </h2>
+      <div v-if="fetchingLocation">
+        <Loader/>
+      </div>
+      <div v-else>
+        <h2 class="location">
+          {{location.city}}, {{location.country_name}}
+          <span
+            role="img"
+            aria-label="flag"
+          >{{location.location.country_flag_emoji}}</span>
+        </h2>
+      </div>
     </div>
-    <div v-if="fetching && !forecast">
-      <Loader/>
+    <div v-if="errorForecast">
+      <p class="error">Error fetching forecast</p>
     </div>
-    <div class="temp-wrapper" v-else>
-      <h1 class="temp">{{forecast.currently.temperature}}</h1>
-      <p class="summary">{{forecast.currently.summary}}</p>
+    <div v-else>
+      <div v-if="fetchingForecast">
+        <Loader/>
+      </div>
+      <div v-else>
+        <div class="temp-wrapper">
+          <h1 class="temp">{{forecast.currently.temperature}}</h1>
+          <p class="summary">{{forecast.currently.summary}}</p>
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -31,8 +43,10 @@ export default {
     return {
       location: null,
       forecast: null,
-      error: false,
-      fetching: false
+      errorLocation: false,
+      errorForecast: false,
+      fetchingLocation: true,
+      fetchingForecast: true
     };
   },
   components: {
@@ -42,27 +56,29 @@ export default {
     getLocation: function() {
       const ipstack_api_key = process.env.VUE_APP_IPSTACK_API_KEY;
 
-      this.fetching = true;
+      this.fetchingLocation = true;
 
       return fetch(`http://api.ipstack.com/check?access_key=${ipstack_api_key}`)
         .then(stream => stream.json())
         .then(data => {
           this.location = data;
-          this.fetching = false;
+          this.fetchingLocation = false;
           return {
             latitude: data.latitude,
             longitude: data.longitude
           };
         })
         .catch(() => {
-          this.error = true;
-          this.fetching = false;
+          this.errorLocation = true;
+          this.errorForecast = true;
+          this.fetchingLocation = false;
+          this.fetchingForecast = false;
         });
     },
     getForecast: function(location) {
       const api_url = process.env.VUE_APP_API_URL;
 
-      this.fetching = true;
+      this.fetchingForecast = true;
 
       fetch(
         `${api_url}/get/forecast/${location.latitude},${location.longitude}`
@@ -70,16 +86,18 @@ export default {
         .then(stream => stream.json())
         .then(data => {
           this.forecast = data;
-          this.fetching = false;
+          this.fetchingForecast = false;
         })
         .catch(() => {
-          this.error = true;
-          this.fetching = false;
+          this.errorForecast = true;
+          this.fetchingForecast = false;
         });
     },
     getWeatherData: async function() {
       const location = await this.getLocation();
-      this.getForecast(location);
+      if (location) {
+        this.getForecast(location);
+      }
     }
   },
   mounted() {
@@ -131,5 +149,8 @@ p {
 }
 .summary {
   font-size: 1rem;
+}
+.error {
+  color: #ff3b30;
 }
 </style>
